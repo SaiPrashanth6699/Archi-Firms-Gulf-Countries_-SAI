@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gulf Architecture Firms – Sai Prashanth</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1f3c;--blue:#1a3a6b;--accent:#c8a96e;--light:#f4f1ec;
+  --white:#fff;--text:#2c2c2c;--muted:#6b7280;--border:#e0d9cf;
+  --row-even:#faf8f5;
+  /* city tags */
+  --c-dxb:#dbeafe;--ct-dxb:#1e40af;
+  --c-auh:#dcfce7;--ct-auh:#166534;
+  --c-bhr:#fef9c3;--ct-bhr:#854d0e;
+  --c-kwt:#fce7f3;--ct-kwt:#9d174d;
+  --c-shj:#ede9fe;--ct-shj:#5b21b6;
+  --c-doh:#ffedd5;--ct-doh:#9a3412;
+  --c-mct:#e0f2fe;--ct-mct:#075985;
+  --c-riy:#f0fdf4;--ct-riy:#14532d;
+  /* status */
+  --s-applied:#dcfce7;--st-applied:#166534;
+  --s-followup:#fef9c3;--st-followup:#854d0e;
+  --s-nogo:#fee2e2;--st-nogo:#991b1b;
+  --s-none:#f3f4f6;--st-none:#6b7280;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--light);color:var(--text);min-height:100vh}
+
+/* ── HEADER ── */
+header{background:var(--navy);color:#fff;padding:32px 40px 24px;border-bottom:4px solid var(--accent)}
+.header-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
+header h1{font-family:'DM Serif Display',serif;font-size:2rem;line-height:1.15}
+header h1 span{color:var(--accent)}
+.meta{font-size:.8rem;color:#9ca3af;margin-top:4px}
+.stats{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:8px;padding:8px 16px;text-align:center}
+.stat-num{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--accent)}
+.stat-lbl{font-size:.68rem;color:#9ca3af;text-transform:uppercase;letter-spacing:.07em}
+
+/* ── CONTROLS ── */
+.controls{background:#fff;padding:14px 40px;border-bottom:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search-box{display:flex;align-items:center;background:var(--light);border:1px solid var(--border);border-radius:8px;padding:7px 12px;gap:7px;flex:1;min-width:200px;max-width:340px}
+.search-box input{border:none;background:transparent;outline:none;font-family:'DM Sans',sans-serif;font-size:.88rem;width:100%;color:var(--text)}
+.filter-btns{display:flex;gap:6px;flex-wrap:wrap}
+.fbtn{padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;cursor:pointer;color:var(--muted);transition:all .18s;white-space:nowrap}
+.fbtn:hover{border-color:var(--navy);color:var(--navy)}
+.fbtn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.fbtn.f-dxb.active{background:var(--ct-dxb);border-color:var(--ct-dxb)}
+.fbtn.f-auh.active{background:var(--ct-auh);border-color:var(--ct-auh)}
+.fbtn.f-bhr.active{background:var(--ct-bhr);border-color:var(--ct-bhr)}
+.fbtn.f-kwt.active{background:var(--ct-kwt);border-color:var(--ct-kwt)}
+.fbtn.f-shj.active{background:var(--ct-shj);border-color:var(--ct-shj)}
+.fbtn.f-doh.active{background:var(--ct-doh);border-color:var(--ct-doh)}
+.fbtn.f-mct.active{background:var(--ct-mct);border-color:var(--ct-mct)}
+.fbtn.f-riy.active{background:var(--ct-riy);border-color:var(--ct-riy)}
+.count-lbl{font-size:.78rem;color:var(--muted);margin-left:auto;white-space:nowrap}
+
+/* ── STATUS FILTER ── */
+.status-bar{background:#fafafa;padding:10px 40px;border-bottom:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.status-bar span{font-size:.75rem;font-weight:600;color:var(--muted);margin-right:4px}
+.sfbtn{padding:5px 12px;border-radius:16px;border:1.5px solid var(--border);background:transparent;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:600;cursor:pointer;transition:all .18s;color:var(--muted)}
+.sfbtn.s-applied.active,.sfbtn.s-applied:hover{background:var(--s-applied);color:var(--st-applied);border-color:var(--st-applied)}
+.sfbtn.s-followup.active,.sfbtn.s-followup:hover{background:var(--s-followup);color:var(--st-followup);border-color:var(--st-followup)}
+.sfbtn.s-nogo.active,.sfbtn.s-nogo:hover{background:var(--s-nogo);color:var(--st-nogo);border-color:var(--st-nogo)}
+.sfbtn.s-none.active,.sfbtn.s-none:hover{background:var(--s-none);color:#374151;border-color:#9ca3af}
+
+/* ── TABLE ── */
+.table-wrap{padding:20px 40px 48px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 14px rgba(13,31,60,.08);font-size:.85rem}
+thead{background:var(--navy)}
+thead th{color:#fff;padding:12px 14px;text-align:left;font-weight:500;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
+thead th:first-child{width:40px;text-align:center}
+thead th:nth-child(2){width:108px}
+thead th:last-child{width:160px}
+tbody tr{border-bottom:1px solid var(--border);transition:background .12s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:nth-child(even){background:var(--row-even)}
+tbody tr:hover{background:#eef2f8}
+tbody tr.hidden{display:none}
+td{padding:11px 14px;vertical-align:middle}
+td:first-child{text-align:center;font-size:.72rem;color:var(--muted);font-weight:600}
+
+/* tags */
+.city-tag{display:inline-block;padding:3px 8px;border-radius:12px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.tag-dxb{background:var(--c-dxb);color:var(--ct-dxb)}
+.tag-auh{background:var(--c-auh);color:var(--ct-auh)}
+.tag-bhr{background:var(--c-bhr);color:var(--ct-bhr)}
+.tag-kwt{background:var(--c-kwt);color:var(--ct-kwt)}
+.tag-shj{background:var(--c-shj);color:var(--ct-shj)}
+.tag-doh{background:var(--c-doh);color:var(--ct-doh)}
+.tag-mct{background:var(--c-mct);color:var(--ct-mct)}
+.tag-riy{background:var(--c-riy);color:var(--ct-riy)}
+
+.tier-badge{display:inline-block;padding:1px 6px;border-radius:6px;font-size:.62rem;font-weight:700;margin-left:5px;vertical-align:middle}
+.tier-1{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.tier-2{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.tier-3{background:#fafafa;color:#6b7280;border:1px solid #e5e7eb}
+
+.firm-name{font-weight:600;color:var(--navy);font-size:.88rem;line-height:1.3}
+.focus{color:var(--text);line-height:1.5;font-size:.82rem}
+.link-cell a{display:inline-flex;align-items:center;gap:4px;color:var(--blue);text-decoration:none;font-weight:500;font-size:.78rem;border-bottom:1px dashed #93c5fd;padding-bottom:1px;transition:color .15s;word-break:break-all}
+.link-cell a:hover{color:var(--accent);border-color:var(--accent)}
+
+/* STATUS DROPDOWN */
+.status-cell{padding:8px 14px}
+.status-select{
+  appearance:none;
+  -webkit-appearance:none;
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  padding:4px 28px 4px 10px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.72rem;
+  font-weight:600;
+  cursor:pointer;
+  outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7280'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
+  background-color:#f9fafb;
+  color:var(--muted);
+  transition:all .18s;
+  width:130px;
+}
+.status-select.applied{background-color:var(--s-applied);color:var(--st-applied);border-color:var(--st-applied)}
+.status-select.followup{background-color:var(--s-followup);color:var(--st-followup);border-color:var(--st-followup)}
+.status-select.nogo{background-color:var(--s-nogo);color:var(--st-nogo);border-color:var(--st-nogo)}
+
+.no-results{text-align:center;padding:56px 20px;color:var(--muted);font-size:.95rem}
+
+footer{text-align:center;padding:22px;font-size:.75rem;color:var(--muted);border-top:1px solid var(--border)}
+
+@media(max-width:768px){
+  header,.controls,.status-bar,.table-wrap{padding-left:16px;padding-right:16px}
+  header h1{font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <div>
+      <div class="meta">Job Search Tracker · Sai Prashanth Subhramaniyam · Architect | BIM | Computational Design · Barcelona → Gulf</div>
+      <h1>Gulf Architecture <span>Firms Directory</span></h1>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="total-count">150</div><div class="stat-lbl">Firms</div></div>
+    <div class="stat"><div class="stat-num" id="applied-count">0</div><div class="stat-lbl">Applied</div></div>
+    <div class="stat"><div class="stat-num" id="followup-count">0</div><div class="stat-lbl">Follow Up</div></div>
+    <div class="stat"><div class="stat-num">8</div><div class="stat-lbl">Cities</div></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-box">
+    <span>🔍</span>
+    <input type="text" id="searchInput" placeholder="Search firm, focus, city, tier…" oninput="filterTable()">
+  </div>
+  <div class="filter-btns">
+    <button class="fbtn active" onclick="setFilter('all',this)">All</button>
+    <button class="fbtn f-dxb" onclick="setFilter('Dubai',this)">🏙 Dubai</button>
+    <button class="fbtn f-auh" onclick="setFilter('Abu Dhabi',this)">🕌 Abu Dhabi</button>
+    <button class="fbtn f-shj" onclick="setFilter('Sharjah',this)">🏛 Sharjah</button>
+    <button class="fbtn f-bhr" onclick="setFilter('Bahrain',this)">🌊 Bahrain</button>
+    <button class="fbtn f-kwt" onclick="setFilter('Kuwait',this)">🏜 Kuwait</button>
+    <button class="fbtn f-doh" onclick="setFilter('Doha',this)">⛽ Doha</button>
+    <button class="fbtn f-mct" onclick="setFilter('Muscat',this)">🏔 Muscat</button>
+    <button class="fbtn f-riy" onclick="setFilter('Riyadh',this)">🌴 Riyadh</button>
+  </div>
+  <span class="count-lbl" id="showing-count">Showing 150 firms</span>
+</div>
+
+<div class="status-bar">
+  <span>Filter by status:</span>
+  <button class="sfbtn s-none active" onclick="setStatusFilter('all',this)">All Statuses</button>
+  <button class="sfbtn s-none" onclick="setStatusFilter('none',this)">⬜ Not Applied</button>
+  <button class="sfbtn s-applied" onclick="setStatusFilter('applied',this)">✅ Applied</button>
+  <button class="sfbtn s-followup" onclick="setStatusFilter('followup',this)">📬 Follow Up</button>
+  <button class="sfbtn s-nogo" onclick="setStatusFilter('nogo',this)">❌ No Go</button>
+</div>
+
+<div class="table-wrap">
+<table id="firmsTable">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>City</th>
+      <th>Firm Name</th>
+      <th>Focus / Notable Projects</th>
+      <th>Website</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
+<div class="no-results" id="noResults" style="display:none">No firms match your current filters.</div>
+</div>
+
+<footer>Compiled May 2026 · Sai Prashanth Subhramaniyam · saiprashanth6699@gmail.com · +34 697 919 283</footer>
+
+<script>
+// ─────────────────────────────────────────────
+// DATA — 150 firms across 8 cities
+// tier: 1=top, 2=mid, 3=boutique/smaller
+// ─────────────────────────────────────────────
+const firms = [
+// ═══════════════ DUBAI (40) ═══════════════
+{city:"Dubai",tier:1,name:"Killa Design",focus:"High-rise, mixed-use, hospitality. Notable: Museum of the Future",url:"https://www.killadesign.com"},
+{city:"Dubai",tier:1,name:"Zaha Hadid Architects (ZHA)",focus:"Iconic futuristic architecture. Notable: The Opus Dubai",url:"https://www.zaha-hadid.com"},
+{city:"Dubai",tier:1,name:"Foster + Partners",focus:"Sustainable architecture, urban planning, commercial towers",url:"https://www.fosterandpartners.com"},
+{city:"Dubai",tier:1,name:"EDGE Architects",focus:"Architecture, interiors, master planning. Notable: 1/JBR (World Design Award 2022)",url:"https://www.edgearchitects.com"},
+{city:"Dubai",tier:1,name:"X-Architects",focus:"Context-driven cultural & sustainable design. Notable: Al Faya Lodge",url:"https://www.x-architects.com"},
+{city:"Dubai",tier:1,name:"Dewan Architects + Engineers",focus:"Commercial, mixed-use, residential. Notable: Port de La Mer, Riverland",url:"https://www.dewan-architects.com"},
+{city:"Dubai",tier:1,name:"Godwin Austen Johnson (GAJ)",focus:"Hospitality, education, commercial, master planning. 110+ professionals",url:"https://www.gajarchitects.com"},
+{city:"Dubai",tier:1,name:"RMJM",focus:"High-rise, mixed-use. Notable: Gate Avenue DIFC, Marina Heights Tower",url:"https://www.rmjm.com"},
+{city:"Dubai",tier:1,name:"Atkins (SNC-Lavalin)",focus:"Infrastructure, transport, sustainability. 2,000+ staff regionally",url:"https://www.atkinsglobal.com"},
+{city:"Dubai",tier:1,name:"RSP Architects Dubai",focus:"Residential, commercial, hospitality. BIM-driven design",url:"https://www.rspindia.net"},
+{city:"Dubai",tier:1,name:"AECOM Middle East",focus:"Infrastructure, engineering, architecture, urban planning",url:"https://www.aecom.com"},
+{city:"Dubai",tier:1,name:"Gensler Dubai",focus:"Workplace, retail, hospitality, aviation. Global design leader",url:"https://www.gensler.com"},
+{city:"Dubai",tier:1,name:"SOM (Dubai)",focus:"Supertall towers, urban planning, sustainability",url:"https://www.som.com"},
+{city:"Dubai",tier:1,name:"HOK Middle East",focus:"Workplace, aviation, sports, healthcare, mixed-use",url:"https://www.hok.com"},
+{city:"Dubai",tier:1,name:"SSH International Consultants",focus:"Master planning, infrastructure, building design. Top 100 global",url:"https://www.sshic.com"},
+{city:"Dubai",tier:2,name:"Roar Design Studio",focus:"Interior design, hospitality, commercial. Notable: SensAsia Spa Kempinski",url:"https://www.roar.ae"},
+{city:"Dubai",tier:2,name:"Loci Architecture + Design",focus:"Culturally integrated: residential, retail, medical. Notable: Palm Jumeirah villas",url:"https://www.loci.ae"},
+{city:"Dubai",tier:2,name:"Archidentity",focus:"Mixed-use, luxury residential. AD100 Middle East 2025",url:"https://www.archidentity.com"},
+{city:"Dubai",tier:2,name:"LW Design Group",focus:"Hospitality — hotels, restaurants, bars. 60+ hotels globally",url:"https://www.lw-designgroup.com"},
+{city:"Dubai",tier:2,name:"H2R Design",focus:"Hospitality, F&B, retail. London & Dubai offices",url:"https://www.h2rdesign.com"},
+{city:"Dubai",tier:2,name:"Diar Consult",focus:"Architecture, landscape, urban design. Notable: Al Bahar Towers facade",url:"https://www.diarconsult.com"},
+{city:"Dubai",tier:2,name:"Archcorp",focus:"Commercial, retail, residential, hospitality, master planning",url:"https://www.archcorp.ae"},
+{city:"Dubai",tier:2,name:"IBDA Design",focus:"Luxury residential, commercial. Notable: Sofitel Dubai Downtown",url:"https://www.ibdadesign.com"},
+{city:"Dubai",tier:2,name:"Chapman Taylor (Dubai)",focus:"Retail, mixed-use, residential, master planning",url:"https://www.chapmantaylor.com"},
+{city:"Dubai",tier:2,name:"CallisonRTKL",focus:"Retail, mixed-use, workplace, residential design",url:"https://www.callisonrtkl.com"},
+{city:"Dubai",tier:2,name:"Arkiteknik International",focus:"Luxury hotels, public buildings, corporate HQs, shopping malls. Since 1991",url:"https://www.arkiteknik.com"},
+{city:"Dubai",tier:2,name:"Designsmith",focus:"Human-centric: commercial, hospitality, F&B, residential",url:"https://www.designsmith.ae"},
+{city:"Dubai",tier:2,name:"NIU Studio",focus:"Boutique luxury architecture & interiors. Italian roots. Residential & retail",url:"https://www.niustudio.com"},
+{city:"Dubai",tier:2,name:"Etereo Design",focus:"Italian-Middle Eastern fusion. Cultural, residential, hospitality",url:"https://www.etereodesign.com"},
+{city:"Dubai",tier:2,name:"ATI Consultants",focus:"Architecture, ID, engineering, master planning. Dubai & Sharjah",url:"https://www.ati-cae.com"},
+{city:"Dubai",tier:2,name:"Dar Al-Handasah (Dubai)",focus:"Engineering, architecture, large-scale infrastructure. MENA powerhouse",url:"https://www.dar.com"},
+{city:"Dubai",tier:2,name:"Khatib & Alami (Dubai)",focus:"Multidisciplinary architecture & engineering. Infrastructure, buildings",url:"https://www.khatib-alami.com"},
+{city:"Dubai",tier:3,name:"VSHD Design",focus:"Residential & commercial — Dubai, London, Cairo, Amman",url:"https://www.vshd.com"},
+{city:"Dubai",tier:3,name:"SOMA Architecture",focus:"Luxury residential, hospitality, commercial. NY + Dubai",url:"https://www.soma-architecture.com"},
+{city:"Dubai",tier:3,name:"Zomorrodi & Associates",focus:"Residential, commercial, retail, hospitality. Featured in Domus",url:"https://www.zomorrodi.com"},
+{city:"Dubai",tier:3,name:"Draw Link Group",focus:"Boutique hotel, mosque design, cultural projects",url:"https://www.drawlinkgroup.com"},
+{city:"Dubai",tier:3,name:"Schematic Engineering Consultants",focus:"Residential, commercial, sustainable solutions. UAE-focused",url:"https://www.schematic.ae"},
+{city:"Dubai",tier:3,name:"Orient Crown Architectural Engineering",focus:"Consultancy & project delivery. Residential & commercial UAE",url:"https://www.orientcrown.ae"},
+{city:"Dubai",tier:3,name:"Gianni Ranaulo Design",focus:"Futuristic, parametric design. Residential & public buildings",url:"https://www.gianniranaulodesign.com"},
+{city:"Dubai",tier:3,name:"DesignTomorrow Studio",focus:"Residential, mixed-use. Dubai & London. Founder: Dara Towhidi",url:"https://www.designtomorrow.co.uk"},
+
+// ═══════════════ ABU DHABI (22) ═══════════════
+{city:"Abu Dhabi",tier:1,name:"Dewan Architects (HQ)",focus:"Residential, commercial, institutional. 500+ staff, 8 global offices",url:"https://www.dewan-architects.com"},
+{city:"Abu Dhabi",tier:1,name:"MZ Architects",focus:"Urban planning, stadiums, master plans. Offices: AUH, Lebanon, Qatar",url:"https://www.mz-architects.com"},
+{city:"Abu Dhabi",tier:1,name:"Gensler Abu Dhabi",focus:"Abu Dhabi Financial Centre, commercial, mixed-use",url:"https://www.gensler.com"},
+{city:"Abu Dhabi",tier:1,name:"SOM Abu Dhabi",focus:"Sheikh Khalifa Medical City, sustainable urban design",url:"https://www.som.com"},
+{city:"Abu Dhabi",tier:1,name:"Foster + Partners (AUH)",focus:"Sustainable green architecture. Zayed National Museum",url:"https://www.fosterandpartners.com"},
+{city:"Abu Dhabi",tier:1,name:"Atkins (Abu Dhabi)",focus:"Infrastructure, transport, government & master planning",url:"https://www.atkinsglobal.com"},
+{city:"Abu Dhabi",tier:1,name:"AECOM Abu Dhabi",focus:"Infrastructure, architecture, program management",url:"https://www.aecom.com"},
+{city:"Abu Dhabi",tier:1,name:"KEO International (AUH)",focus:"Architecture, engineering, project management. Top 100 global",url:"https://www.keoic.com"},
+{city:"Abu Dhabi",tier:2,name:"Makan Consulting Engineers",focus:"High-rise, hospitality, religious. Notable: Khalifa Mosque",url:"https://www.makanae.com"},
+{city:"Abu Dhabi",tier:2,name:"Bayaty Architects",focus:"Design & engineering, research-driven. Est. 1978",url:"https://www.bayaty.com"},
+{city:"Abu Dhabi",tier:2,name:"Shape Architecture Practice",focus:"Cultural, civic. Notable: Anwar Gargash Diplomatic Academy",url:"https://www.shapearchitecture.com"},
+{city:"Abu Dhabi",tier:2,name:"Perkins + Will (AUH)",focus:"Healthcare, education, workplace, sustainable design",url:"https://www.perkinswill.com"},
+{city:"Abu Dhabi",tier:2,name:"HOK Abu Dhabi",focus:"Sports, healthcare, aviation, mixed-use",url:"https://www.hok.com"},
+{city:"Abu Dhabi",tier:2,name:"WSP Global (AUH)",focus:"Engineering, environment, infrastructure consultancy",url:"https://www.wsp.com"},
+{city:"Abu Dhabi",tier:2,name:"Chapman Taylor (AUH)",focus:"Retail, master planning, mixed-use development",url:"https://www.chapmantaylor.com"},
+{city:"Abu Dhabi",tier:2,name:"APG Architects",focus:"Master planning, architecture, interior design. 8 MENA offices",url:"https://www.apg-architects.com"},
+{city:"Abu Dhabi",tier:2,name:"Lacasa Architects (AUH)",focus:"Residential, commercial, hospitality, master plans",url:"https://www.lacasaarchitects.com"},
+{city:"Abu Dhabi",tier:2,name:"GHD Group (AUH)",focus:"Infrastructure, environment, buildings",url:"https://www.ghd.com"},
+{city:"Abu Dhabi",tier:3,name:"Mossessian Architecture",focus:"Cultural, mixed-use, hospitality. International studios",url:"https://www.mossessian.com"},
+{city:"Abu Dhabi",tier:3,name:"Diar Consult (AUH)",focus:"Architecture, landscape, cultural heritage. Al Bahar Towers",url:"https://www.diarconsult.com"},
+{city:"Abu Dhabi",tier:3,name:"Al Emaar Engineering Consultants",focus:"Upscale residential, commercial, retail, villas. UAE-wide",url:"https://www.aeec.ae"},
+{city:"Abu Dhabi",tier:3,name:"OKAPI Global Engineering",focus:"Architecture & engineering consultancy. Abu Dhabi focus",url:"https://www.okapi.ae"},
+
+// ═══════════════ SHARJAH (10) ═══════════════
+{city:"Sharjah",tier:2,name:"Cravia Architecture",focus:"Commercial, residential, mixed-use. Sharjah & northern emirates",url:"https://www.cravia.ae"},
+{city:"Sharjah",tier:2,name:"AE7 (Sharjah)",focus:"Multidisciplinary design — architecture, engineering, interiors",url:"https://www.ae7.com"},
+{city:"Sharjah",tier:2,name:"Lacasa Architects (Sharjah)",focus:"Residential, commercial, hospitality. GCC studios",url:"https://www.lacasaarchitects.com"},
+{city:"Sharjah",tier:2,name:"ATI Consultants (Sharjah)",focus:"Architecture, engineering, master planning. UAE wide",url:"https://www.ati-cae.com"},
+{city:"Sharjah",tier:2,name:"NAGA Architects",focus:"Mixed-use, residential, corporate. Aljada Cultural District",url:"https://www.nagaarchitects.com"},
+{city:"Sharjah",tier:3,name:"Projct Architecture",focus:"Boutique residential & commercial. Sharjah focus",url:"https://www.projctarchitecture.com"},
+{city:"Sharjah",tier:3,name:"Prime Engineering Consultants",focus:"Residential, commercial, government projects in UAE",url:"https://www.prime-ec.com"},
+{city:"Sharjah",tier:3,name:"Al Mujassam Architects & Engineers",focus:"Mixed-use, residential, authority submissions. UAE",url:"https://www.almujassam.ae"},
+{city:"Sharjah",tier:3,name:"BHNS Engineering Consultants",focus:"Architectural engineering, structural, MEP. Sharjah-based",url:"https://www.bhns.ae"},
+{city:"Sharjah",tier:3,name:"Integrated Group",focus:"Architecture, engineering, interiors. Northern Emirates projects",url:"https://www.integrated-ae.com"},
+
+// ═══════════════ BAHRAIN (18) ═══════════════
+{city:"Bahrain",tier:1,name:"SSH International (Bahrain)",focus:"Master planning, infrastructure, building design, construction supervision",url:"https://www.sshic.com"},
+{city:"Bahrain",tier:1,name:"Arab Architects W.L.L.",focus:"Architecture & engineering. Cat 'A' consultant. Notable: Symphony Tower (46F)",url:"https://www.arabarchs.com"},
+{city:"Bahrain",tier:1,name:"KEO International (Bahrain)",focus:"Architecture, engineering, project management. Multi-country",url:"https://www.keoic.com"},
+{city:"Bahrain",tier:1,name:"Dar Al-Handasah (Bahrain)",focus:"Engineering, architecture, large-scale infrastructure",url:"https://www.dar.com"},
+{city:"Bahrain",tier:2,name:"DWP Design Worldwide Partnership",focus:"Hospitality, commercial, retail, healthcare. Regional offices",url:"https://www.dwp.com"},
+{city:"Bahrain",tier:2,name:"Architecture 360",focus:"Architecture, interior design, construction. Residential & hospitality",url:"https://www.architecture360.net"},
+{city:"Bahrain",tier:2,name:"Mohamed Salahuddin Consulting (MSCEB)",focus:"Integrated architecture & engineering. Est. 1970. Civic projects",url:"https://www.msceb.com"},
+{city:"Bahrain",tier:2,name:"PACE (Bahrain)",focus:"Architecture, engineering, planning. Notable: Marassi Al Bahrain",url:"https://www.pace-me.com"},
+{city:"Bahrain",tier:2,name:"Khatib & Alami (Bahrain)",focus:"Multidisciplinary engineering & architecture. MENA-wide",url:"https://www.khatib-alami.com"},
+{city:"Bahrain",tier:2,name:"Projacs International (Bahrain)",focus:"Project management, construction supervision, architecture",url:"https://www.projacs.com"},
+{city:"Bahrain",tier:2,name:"Areen Design (Bahrain)",focus:"Interior design, fit-out, hospitality. GCC-wide practice",url:"https://www.areendesign.com"},
+{city:"Bahrain",tier:2,name:"GHD Group (Bahrain)",focus:"Infrastructure, environment, buildings consultancy",url:"https://www.ghd.com"},
+{city:"Bahrain",tier:3,name:"Design Studio Architects (Bahrain)",focus:"Luxury residential, large-scale commercial. Detail-focused",url:"https://www.designstudioarch.com"},
+{city:"Bahrain",tier:3,name:"Lacasa Architects (Bahrain)",focus:"Residential, commercial, hospitality. GCC-wide",url:"https://www.lacasaarchitects.com"},
+{city:"Bahrain",tier:3,name:"Erga Group (Bahrain)",focus:"Architecture & engineering. Branches in KSA, Qatar, UAE",url:"https://www.erga.com"},
+{city:"Bahrain",tier:3,name:"AEB Bahrain",focus:"Architecture & engineering. 1,000+ projects regionally since 1966",url:"https://www.aebqatar.com"},
+{city:"Bahrain",tier:3,name:"Stantec (Bahrain)",focus:"Buildings, infrastructure, environmental consultancy",url:"https://www.stantec.com"},
+{city:"Bahrain",tier:3,name:"WSP Global (Bahrain)",focus:"Engineering, environment, advisory. GCC-wide offices",url:"https://www.wsp.com"},
+
+// ═══════════════ KUWAIT (15) ═══════════════
+{city:"Kuwait",tier:1,name:"Gulf Consult (GC)",focus:"Architecture, urban planning, engineering. Est. 1963. Major mixed-use & high-rise",url:"https://www.gckuwait.com"},
+{city:"Kuwait",tier:1,name:"PACE (Pan Arab Consulting Engineers)",focus:"Architecture, master planning. Est. 1968. Notable: The Avenues Mall, Central Bank",url:"https://www.pace-me.com"},
+{city:"Kuwait",tier:1,name:"KEO International (Kuwait)",focus:"Architecture, engineering, project management. Est. 1960. Top 100 global",url:"https://www.keoic.com"},
+{city:"Kuwait",tier:1,name:"SSH International (Kuwait HQ)",focus:"Master planning, infrastructure, building design. Est. 1961, 800+ staff",url:"https://www.sshic.com"},
+{city:"Kuwait",tier:2,name:"Alhumaidhi Architects",focus:"Residential, commercial, public sector. Est. 2000. Functional design",url:"https://www.alhumaidhi.com"},
+{city:"Kuwait",tier:2,name:"GEC DAR",focus:"Residential, commercial, educational, hospitality. International projects",url:"https://www.gecdar.com"},
+{city:"Kuwait",tier:2,name:"Al-Abdulhadi Engineering Consultancy (AEC)",focus:"Commercial, residential, entertainment, cultural, healthcare",url:"https://www.aeckw.com"},
+{city:"Kuwait",tier:2,name:"NBC Engineering Consultants",focus:"Architecture, urban planning, construction supervision",url:"https://www.nbcec.com"},
+{city:"Kuwait",tier:2,name:"Dar Al-Handasah (Kuwait)",focus:"Engineering, architecture, large-scale infrastructure",url:"https://www.dar.com"},
+{city:"Kuwait",tier:2,name:"Projacs International (Kuwait)",focus:"Project management, architecture, construction supervision",url:"https://www.projacs.com"},
+{city:"Kuwait",tier:2,name:"Khatib & Alami (Kuwait)",focus:"Multidisciplinary architecture & engineering across MENA",url:"https://www.khatib-alami.com"},
+{city:"Kuwait",tier:3,name:"Gensler Kuwait",focus:"Workplace, retail, hospitality, aviation. Global firm, regional offices",url:"https://www.gensler.com"},
+{city:"Kuwait",tier:3,name:"Stantec (Kuwait)",focus:"Buildings, infrastructure, environmental, community development",url:"https://www.stantec.com"},
+{city:"Kuwait",tier:3,name:"Erga Group (Kuwait)",focus:"Architecture & engineering. Lebanon HQ, GCC branches",url:"https://www.erga.com"},
+{city:"Kuwait",tier:3,name:"Lacasa Architects (Kuwait)",focus:"Residential, commercial, hospitality. GCC studio network",url:"https://www.lacasaarchitects.com"},
+
+// ═══════════════ DOHA / QATAR (20) ═══════════════
+{city:"Doha",tier:1,name:"Arab Engineering Bureau (AEB)",focus:"Qatar's first architecture firm (1966). 1,000+ projects. Hospitality, civic, embassy",url:"https://www.aebqatar.com"},
+{city:"Doha",tier:1,name:"AECOM Qatar",focus:"Infrastructure, architecture, program management. Major government projects",url:"https://www.aecom.com"},
+{city:"Doha",tier:1,name:"Atkins (Qatar)",focus:"Infrastructure, transport, commercial, sustainability. 2,000+ staff regionally",url:"https://www.atkinsglobal.com"},
+{city:"Doha",tier:1,name:"KEO International (Qatar)",focus:"Architecture, engineering, project management. Global Top 100",url:"https://www.keoic.com"},
+{city:"Doha",tier:1,name:"Dar Al-Handasah (Qatar)",focus:"Engineering, architecture, infrastructure. MENA powerhouse",url:"https://www.dar.com"},
+{city:"Doha",tier:2,name:"SSH International (Qatar)",focus:"Master planning, infrastructure, building design. 800+ staff globally",url:"https://www.sshic.com"},
+{city:"Doha",tier:2,name:"Khatib & Alami (Qatar)",focus:"Multidisciplinary architecture & engineering. 15+ country presence",url:"https://www.khatib-alami.com"},
+{city:"Doha",tier:2,name:"Perkins + Will (Qatar)",focus:"Healthcare, education, workplace, sustainable design",url:"https://www.perkinswill.com"},
+{city:"Doha",tier:2,name:"HOK Qatar",focus:"Sports, aviation, healthcare, civic. Notable: Lusail Stadium support",url:"https://www.hok.com"},
+{city:"Doha",tier:2,name:"GHD Group (Qatar)",focus:"Infrastructure, environment, buildings",url:"https://www.ghd.com"},
+{city:"Doha",tier:2,name:"Stantec (Qatar)",focus:"Buildings, infrastructure, environmental, community development",url:"https://www.stantec.com"},
+{city:"Doha",tier:2,name:"WSP Global (Qatar)",focus:"Engineering, environment, advisory. GCC-wide",url:"https://www.wsp.com"},
+{city:"Doha",tier:2,name:"MZ Architects (Qatar)",focus:"Architecture, urban planning, stadiums, master plans",url:"https://www.mz-architects.com"},
+{city:"Doha",tier:2,name:"Projacs International (Qatar)",focus:"Project management, construction supervision, architecture",url:"https://www.projacs.com"},
+{city:"Doha",tier:3,name:"Lacasa Architects (Qatar)",focus:"Residential, commercial, hospitality. GCC studios",url:"https://www.lacasaarchitects.com"},
+{city:"Doha",tier:3,name:"Erga Group (Qatar)",focus:"Architecture & engineering. Lebanon HQ. GCC + MENA branches",url:"https://www.erga.com"},
+{city:"Doha",tier:3,name:"Highness Architecture & Engineering",focus:"Residential, commercial, interiors. Doha-based",url:"https://www.highness-arch.com"},
+{city:"Doha",tier:3,name:"Draw Link Group (Qatar)",focus:"Boutique hospitality, cultural, mosque design",url:"https://www.drawlinkgroup.com"},
+{city:"Doha",tier:3,name:"Zuhair Fayez Partnership (Qatar)",focus:"BIM pioneer in Gulf. Architecture, master planning",url:"https://www.zfp.com.sa"},
+{city:"Doha",tier:3,name:"Diyar Consultants",focus:"Commercial, institutional, residential, hospitality. Est. 1985. MENA network",url:"https://www.diyar.com"},
+
+// ═══════════════ MUSCAT / OMAN (12) ═══════════════
+{city:"Muscat",tier:1,name:"SSH International (Oman)",focus:"Master planning, infrastructure, building design. 800+ staff GCC",url:"https://www.sshic.com"},
+{city:"Muscat",tier:1,name:"Atkins (Oman)",focus:"Infrastructure, transport, government projects, sustainability",url:"https://www.atkinsglobal.com"},
+{city:"Muscat",tier:2,name:"KEO International (Oman)",focus:"Architecture, engineering, project management",url:"https://www.keoic.com"},
+{city:"Muscat",tier:2,name:"IJAE (Ibrahim Jaidah Architects)",focus:"AEB Qatar's Oman subsidiary. Hospitality, civic, embassy design",url:"https://www.ibrahimjaidah.com"},
+{city:"Muscat",tier:2,name:"Khatib & Alami (Oman)",focus:"Multidisciplinary architecture & engineering. 15+ country presence",url:"https://www.khatib-alami.com"},
+{city:"Muscat",tier:2,name:"Dar Al-Handasah (Oman)",focus:"Engineering, architecture, large-scale infrastructure",url:"https://www.dar.com"},
+{city:"Muscat",tier:2,name:"GHD Group (Oman)",focus:"Infrastructure, environment, buildings consultancy",url:"https://www.ghd.com"},
+{city:"Muscat",tier:2,name:"WSP Global (Oman)",focus:"Engineering, environment, advisory services",url:"https://www.wsp.com"},
+{city:"Muscat",tier:3,name:"Al Hatmy Design Studio",focus:"Residential, sports complexes, marine projects. UAE & Africa presence",url:"https://www.alhatmy.com"},
+{city:"Muscat",tier:3,name:"Projacs International (Oman)",focus:"Project management, architecture, construction supervision",url:"https://www.projacs.com"},
+{city:"Muscat",tier:3,name:"Stantec (Oman)",focus:"Buildings, infrastructure, environmental services",url:"https://www.stantec.com"},
+{city:"Muscat",tier:3,name:"Erga Group (Oman)",focus:"Architecture & engineering. Regional practice",url:"https://www.erga.com"},
+
+// ═══════════════ RIYADH / KSA (13) ═══════════════
+{city:"Riyadh",tier:1,name:"Zuhair Fayez Partnership (ZFP)",focus:"Saudi Arabia's largest architecture firm. BIM pioneer. NEOM, KEC, masterplans",url:"https://www.zfp.com.sa"},
+{city:"Riyadh",tier:1,name:"AECOM Saudi Arabia",focus:"Infrastructure, architecture, program management",url:"https://www.aecom.com"},
+{city:"Riyadh",tier:1,name:"Atkins (KSA)",focus:"Infrastructure, transport, commercial, sustainability",url:"https://www.atkinsglobal.com"},
+{city:"Riyadh",tier:1,name:"SOM Riyadh",focus:"Supertall towers, urban planning, sustainability. NEOM input",url:"https://www.som.com"},
+{city:"Riyadh",tier:1,name:"Gensler Riyadh",focus:"Workplace, hospitality, mixed-use, aviation. Major Saudi Vision 2030 projects",url:"https://www.gensler.com"},
+{city:"Riyadh",tier:2,name:"Dar Al-Handasah (KSA)",focus:"Engineering, architecture, infrastructure. MENA powerhouse",url:"https://www.dar.com"},
+{city:"Riyadh",tier:2,name:"Khatib & Alami (KSA)",focus:"Multidisciplinary architecture & engineering. 15+ countries",url:"https://www.khatib-alami.com"},
+{city:"Riyadh",tier:2,name:"Diyar Consultants (KSA)",focus:"Commercial, institutional, residential, hospitality. HQ Jeddah",url:"https://www.diyar.com"},
+{city:"Riyadh",tier:2,name:"HOK Riyadh",focus:"Workplace, aviation, healthcare, sports. Vision 2030 projects",url:"https://www.hok.com"},
+{city:"Riyadh",tier:2,name:"Stantec (KSA)",focus:"Buildings, infrastructure, environmental, community",url:"https://www.stantec.com"},
+{city:"Riyadh",tier:2,name:"WSP Global (KSA)",focus:"Engineering, environment, advisory. Vision 2030 mega-projects",url:"https://www.wsp.com"},
+{city:"Riyadh",tier:3,name:"Lacasa Architects (KSA)",focus:"Residential, commercial, hospitality. GCC studios",url:"https://www.lacasaarchitects.com"},
+{city:"Riyadh",tier:3,name:"Erga Group (KSA)",focus:"Architecture & engineering. Lebanon HQ with KSA branch",url:"https://www.erga.com"},
+];
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let cityFilter = "all";
+let statusFilter = "all";
+// Load saved statuses from localStorage
+const savedStatus = {};
+try {
+  const raw = localStorage.getItem("firmStatus");
+  if(raw) Object.assign(savedStatus, JSON.parse(raw));
+} catch(e){}
+
+const cityTag = {
+  "Dubai":"tag-dxb","Abu Dhabi":"tag-auh","Sharjah":"tag-shj",
+  "Bahrain":"tag-bhr","Kuwait":"tag-kwt","Doha":"tag-doh",
+  "Muscat":"tag-mct","Riyadh":"tag-riy"
+};
+
+// ─────────────────────────────────────────────
+// BUILD TABLE
+// ─────────────────────────────────────────────
+function buildTable(){
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = "";
+  firms.forEach((f,i)=>{
+    const key = `${f.city}__${f.name}`;
+    const status = savedStatus[key] || "none";
+    const tierLabel = f.tier===1?"Tier 1":f.tier===2?"Tier 2":"Tier 3";
+    const tierCls   = f.tier===1?"tier-1":f.tier===2?"tier-2":"tier-3";
+    const tr = document.createElement("tr");
+    tr.dataset.city = f.city;
+    tr.dataset.status = status;
+    tr.dataset.key = key;
+    tr.dataset.idx = i;
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td><span class="city-tag ${cityTag[f.city]}">${f.city}</span></td>
+      <td>
+        <div class="firm-name">${f.name}<span class="tier-badge ${tierCls}">${tierLabel}</span></div>
+      </td>
+      <td><div class="focus">${f.focus}</div></td>
+      <td class="link-cell"><a href="${f.url}" target="_blank" rel="noopener">${f.url.replace('https://','').replace('http://','')}</a></td>
+      <td class="status-cell">
+        <select class="status-select ${status}" onchange="setStatus('${key}',this)">
+          <option value="none" ${status==='none'?'selected':''}>— Not Applied</option>
+          <option value="applied" ${status==='applied'?'selected':''}>✅ Applied</option>
+          <option value="followup" ${status==='followup'?'selected':''}>📬 Follow Up</option>
+          <option value="nogo" ${status==='nogo'?'selected':''}>❌ No Go</option>
+        </select>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+  filterTable();
+}
+
+// ─────────────────────────────────────────────
+// STATUS CHANGE
+// ─────────────────────────────────────────────
+function setStatus(key, sel){
+  const val = sel.value;
+  savedStatus[key] = val;
+  try{ localStorage.setItem("firmStatus", JSON.stringify(savedStatus)); } catch(e){}
+  sel.className = `status-select ${val}`;
+  sel.closest("tr").dataset.status = val;
+  filterTable();
+  updateCounts();
+}
+
+// ─────────────────────────────────────────────
+// FILTERS
+// ─────────────────────────────────────────────
+function setFilter(city, btn){
+  cityFilter = city;
+  document.querySelectorAll(".fbtn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  filterTable();
+}
+
+function setStatusFilter(s, btn){
+  statusFilter = s;
+  document.querySelectorAll(".sfbtn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  filterTable();
+}
+
+function filterTable(){
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const rows = document.querySelectorAll("#tableBody tr");
+  let visible=0;
+  rows.forEach(row=>{
+    const cityMatch = cityFilter==="all" || row.dataset.city===cityFilter;
+    const statMatch = statusFilter==="all" || row.dataset.status===statusFilter;
+    const textMatch = !q || row.innerText.toLowerCase().includes(q);
+    const show = cityMatch && statMatch && textMatch;
+    row.classList.toggle("hidden", !show);
+    if(show) visible++;
+  });
+  // Re-number
+  let n=1;
+  rows.forEach(row=>{ if(!row.classList.contains("hidden")) row.cells[0].textContent=n++; });
+  document.getElementById("showing-count").textContent=`Showing ${visible} firm${visible!==1?'s':''}`;
+  document.getElementById("noResults").style.display = visible===0?"block":"none";
+  updateCounts();
+}
+
+function updateCounts(){
+  const rows = document.querySelectorAll("#tableBody tr");
+  let ap=0,fu=0;
+  rows.forEach(r=>{ if(r.dataset.status==="applied") ap++; if(r.dataset.status==="followup") fu++; });
+  document.getElementById("applied-count").textContent=ap;
+  document.getElementById("followup-count").textContent=fu;
+}
+
+buildTable();
+document.getElementById("total-count").textContent=firms.length;
+</script>
+</body>
+</html>
